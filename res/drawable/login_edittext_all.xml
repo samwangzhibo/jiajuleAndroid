@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"> 
+    <solid android:color="#FFFFFF" /> <!-- 因为的登录背景颜色为白色，所以设置成了白色，如果如其他颜色，根据自己的要求来设定-->
+    <corners android:radius="3dip"/>
+    <stroke  
+        android:width="0dip" 
+        android:color="#ffffff" /> 
+</shape>
+
+

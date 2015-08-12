@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/contextitem1"
+        android:title="九宫格解锁">
+    </item>
+    <item
+        android:id="@+id/contextitem2"
+        android:title="密码解锁">
+    </item>
+</menu>

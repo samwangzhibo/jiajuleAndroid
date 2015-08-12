@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/w01" >
+
+    <Button
+        android:id="@+id/changemodel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:background="#00000000"
+        android:text="切换至语音小助手"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android1:id="@+id/linearLayout1"
+        android1:layout_width="fill_parent"
+        android1:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android1:layout_alignParentBottom="true"
+        android1:layout_marginBottom="30dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android1:id="@+id/login"
+            android:layout_width="0dp"
+            android1:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android1:background="#00000000"
+            android1:text="登陆"
+            android1:textSize="20sp" />
+
+        <Button
+            android1:id="@+id/register"
+            android:layout_width="0dp"
+            android1:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android1:background="#00000000"
+            android1:text="注册"
+            android1:textSize="20sp" />
+
+        <Button
+            android1:id="@+id/myplace"
+            android:layout_width="0dp"
+            android1:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android1:background="#00000000"
+            android1:text="我的位置"
+            android1:textSize="20sp" />
+    </LinearLayout>
+
+    <Button
+        android1:id="@+id/lampcontrol"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_above="@+id/linearLayout1"
+        android1:layout_alignLeft="@+id/tag_bt"
+        android1:layout_marginBottom="139dp"
+        android1:background="#00000000"
+        android1:text="灯光控制"
+        android1:textSize="30sp" />
+
+    <Button
+        android1:id="@+id/tag_bt"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_above="@+id/lampcontrol"
+        android1:layout_centerHorizontal="true"
+        android1:layout_marginBottom="91dp"
+        android1:background="#00000000"
+        android1:text="实时监控"
+        android1:textSize="30sp" />
+
+    <Button
+        android1:id="@+id/unlock"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_above="@+id/tag_bt"
+        android1:layout_alignLeft="@+id/tag_bt"
+        android1:layout_marginBottom="89dp"
+        android1:background="#00000000"
+        android1:text="智能解锁"
+        android1:textSize="30sp" />
+
+</RelativeLayout>

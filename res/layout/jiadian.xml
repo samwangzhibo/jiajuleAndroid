@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/whatsnew_bg" 
+    >
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:background="@drawable/color" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="家电远端控制"
+            android:textSize="30dip" />
+         
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/jiadian_bluetooth"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/bluetooth" />
+
+    <ImageView
+        android:id="@+id/jiadian_goto_home"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/jiadian_bluetooth"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/lamp" />
+
+</RelativeLayout>
+

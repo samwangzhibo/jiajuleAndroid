@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/unlock_pass"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="设置解锁密码" />
+
+    <Button
+        android:id="@+id/unlock_jiugongge"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="设置解锁九宫格" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/unlock_yuyin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="语音开关" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="开启" />
+   
+    </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/setting_tag"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/tag"
+        android:layout_weight="0.17"
+        android:ems="10" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/setting_tag_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/tag_bt" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/setting_alias_et"
+                android:layout_width="164dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_alias"
+                android:ems="10" >
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:id="@+id/setting_alias_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.21"
+                android:text="@string/tag_bt" />
+
+        </LinearLayout>
+
+</LinearLayout>

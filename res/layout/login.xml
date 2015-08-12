@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  	android:background="@drawable/skyblue"
+    tools:context=".login" >
+
+    <Button
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/register"
+        android:background="@drawable/login"
+       
+        android:text="跳过，进行测试" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/login"
+        android:text="忘记密码?注册" />
+
+    <ImageView
+        android:id="@+id/login_im_icon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/register"
+        android:layout_marginTop="47dp"
+        android:layout_toLeftOf="@+id/test"
+        android:src="@drawable/me" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/login_im_icon"
+        android:layout_marginTop="29dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <EditText
+                android:id="@+id/name_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/login_username_delete"
+                android:background="@drawable/login_edittext"
+                android:ems="10"
+                android:hint="@string/login_default_name"
+                android:textSize="22dp" >
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:id="@+id/btn_user_selected_d"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/user_select_icon" />
+
+            <ImageView
+                android:id="@+id/login_username_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/btn_user_selected_d"
+                android:visibility="invisible"
+                android:src="@drawable/delete2" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lrsaf"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:background="#ffffff" >
+
+        <EditText
+            android:id="@+id/pass_et"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="@string/login_default_pass"
+            android:inputType="textWebPassword"
+            android:textSize="22dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lrsaf"
+        android:layout_marginTop="41dp"
+        android:background="@drawable/login"
+        android:text="登录" />
+
+</RelativeLayout>
