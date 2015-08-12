@@ -66,6 +66,7 @@ public class login extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		System.out.println("----by wzb");
 		 SharedPreferences settings = getSharedPreferences(jiajulemainActivity.SETTING_INFOS,0);
 		flag=settings.getString("username","nobody");
 		Log.e(tag,"login取得的值"+flag);
