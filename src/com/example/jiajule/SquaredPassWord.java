@@ -14,26 +14,26 @@ import android.widget.ImageView;
 
 /**
  * @Title: SquaredPassWord.java
- * @Description: 九宫格密�?
+ * @Description: 九宫格密�?
  * @author lanhaizhong
- * @date 2013�?�?6�?下午3:48:10
+ * @date 2013�?�?6�?下午3:48:10
  * @version V1.0 Copyright (c) 2013 Company,Inc. All Rights Reserved.
  * 
  */
 public class SquaredPassWord extends View {
 	ImageView i;
 	private int length;// 九宫格密码是正方形所以只要知道边长就可以
-	private Point[] points = new Point[9];// 九宫格节�?
-	private Bitmap defualtPointMap = BitmapFactory.decodeResource(getResources(), R.drawable.locus_round_original);// 正常情况下点的位�?
-	private int poitleght = defualtPointMap.getWidth();// 节点的边长；这里值�?虑正方形状�?
-	private Bitmap selectPointMap = BitmapFactory.decodeResource(getResources(), R.drawable.locus_round_click);// 选中情况下点的位�?
+	private Point[] points = new Point[9];// 九宫格节点
+	private Bitmap defualtPointMap = BitmapFactory.decodeResource(getResources(), R.drawable.locus_round_original);// 正常情况下点的位�?
+	private int poitleght = defualtPointMap.getWidth();// 节点的边长；这里值�?虑正方形状�?
+	private Bitmap selectPointMap = BitmapFactory.decodeResource(getResources(), R.drawable.locus_round_click);// 选中情况下点的位�?
 	private Point startPoint;// 起点
-	private Point tempPoint;// 临时存储上一个节�?
-	private StringBuffer passWBuffer = new StringBuffer();// 保存轨迹顺序的密�?
+	private Point tempPoint;// 临时存储上一个节点
+	private StringBuffer passWBuffer = new StringBuffer();// 保存轨迹顺序的密码
 	private Bitmap lineBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.locus_line);
 	private int lineBitmapheight = lineBitmap.getHeight();
 	private double lineBitmapWidth = lineBitmap.getWidth();
-	// 以下四个变量是为了绘制最后一个跟手指之间的连�?
+	// 以下四个变量是为了绘制最后一个跟手指之间的连�?
 	private int startX;// 移动起点X
 	private int startY;// 移动起点Y
 	private int moveX;// 正在移动的X
@@ -54,6 +54,66 @@ public class SquaredPassWord extends View {
 
 	}
 
+
+
+	/**
+	 * 回复各个点到初始状态
+	 */
+	private void reSetData() {
+		for (Point point : points) {
+			point.setSelected(false);
+			point.setNextID(point.getId());
+		}
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		// TODO Auto-generated method stub
+		int width = getWidth() - getPaddingLeft() - getPaddingRight();
+		int height = getHeight() - getPaddingTop() - getPaddingBottom();
+		length = (width < height ? width : height);// 获取边长
+		if(!(length>0)){
+			
+		}
+		System.out.println(length);
+		initPionts(points);
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		if (moveX != 0 && moveY != 0 && startX != 0 && startY != 0) {
+			// 绘制当前活动的线s
+			drawLine(startX, startY, moveX, moveY, canvas);
+		}
+		drawLinePoint(canvas);
+		super.onDraw(canvas);
+	}
+
+	/**
+	 * 初始各节
+	 * 
+	 * @param pionts
+	 */
+	@SuppressWarnings("null")
+	private void initPionts(Point[] points) {
+		int spacing = (length - poitleght * 3) / 2;
+
+		if (points == null && points.length != 9) {// 只做九宫格的处理
+			return;
+		} else {
+			for (int i = 0; i < 9; i++) {
+				int row = i / 3;// 行数
+				int column = i % 3;// 列数；求整取�?
+
+				int x = (poitleght + spacing) * column + getPaddingLeft();// x坐标
+				int y = (poitleght + spacing) * row + getPaddingTop();// y坐标
+				Point point = new Point((i + 1), x, y, poitleght);
+				points[i] = point;
+			}
+		}
+	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		boolean flag = true;
@@ -100,68 +160,8 @@ public class SquaredPassWord extends View {
 		}
 		return flag;
 	}
-
 	/**
-	 * 回复各个点到初始状�?
-	 */
-	private void reSetData() {
-		for (Point point : points) {
-			point.setSelected(false);
-			point.setNextID(point.getId());
-		}
-	}
-
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// TODO Auto-generated method stub
-		int width = getWidth() - getPaddingLeft() - getPaddingRight();
-		int height = getHeight() - getPaddingTop() - getPaddingBottom();
-		length = (width < height ? width : height);// 获取边长
-		if(!(length>0)){
-			
-		}
-		System.out.println(length);
-		initPionts(points);
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		// TODO Auto-generated method stub
-		if (moveX != 0 && moveY != 0 && startX != 0 && startY != 0) {
-			// 绘制当前活动的线�?
-			drawLine(startX, startY, moveX, moveY, canvas);
-		}
-		drawLinePoint(canvas);
-		super.onDraw(canvas);
-	}
-
-	/**
-	 * 初始各节�?
-	 * 
-	 * @param pionts
-	 */
-	@SuppressWarnings("null")
-	private void initPionts(Point[] points) {
-		int spacing = (length - poitleght * 3) / 2;
-
-		if (points == null && points.length != 9) {// 只做九宫格的处理
-			return;
-		} else {
-			for (int i = 0; i < 9; i++) {
-				int row = i / 3;// 行数
-				int column = i % 3;// 列数；求整取�?
-
-				int x = (poitleght + spacing) * column + getPaddingLeft();// x坐标
-				int y = (poitleght + spacing) * row + getPaddingTop();// y坐标
-				Point point = new Point((i + 1), x, y, poitleght);
-				points[i] = point;
-			}
-		}
-	}
-
-	/**
-	 * 绘制各节点以及被选择的个节点之间的连线轨�?
+	 * 绘制各节点以及被选择的个节点之间的连线轨�?
 	 * 
 	 * @param canvas
 	 */
@@ -206,7 +206,7 @@ public class SquaredPassWord extends View {
 	}
 
 	/**
-	 * 画连�?
+	 * 画连�?
 	 * 
 	 * @param startX
 	 *            起点X
@@ -224,11 +224,11 @@ public class SquaredPassWord extends View {
 		double hypotenuse = Math.hypot((stopX - startX), (stopY - startY));
 		// double side = stopX - startX;// 邻边
 		// double piAngle = Math.acos(side / hypotenuse);// pi角度
-		// float rotate = (float) (180 / Math.PI * piAngle);// 转换的角�?
+		// float rotate = (float) (180 / Math.PI * piAngle);// 转换的角�?
 		float rotate = getDegrees(startX, startY, stopX, stopY);
 		Matrix matrix = new Matrix();
-		// matrix.postRotate(rotate);//不能用这个matritx 来�?择角度只能用 让canvas懒�?�?
-				// 用matrix的话会引起图片所表示的线条不在中心点�?
+		// matrix.postRotate(rotate);//不能用这个matritx 来�?择角度只能用 让canvas懒�?�?
+				// 用matrix的话会引起图片所表示的线条不在中心点�?
 				canvas.rotate(rotate, startX, startY);
 		matrix.preTranslate(0, 0);
 		matrix.setScale((float) (hypotenuse / lineBitmapWidth), 1.0f);
@@ -263,7 +263,7 @@ public class SquaredPassWord extends View {
 		double side = stopX - startX;// 邻边
 		double piAngle = Math.acos(side / hypotenuse);// pi角度
 		float rotate = (float) (180 / Math.PI * piAngle);// 转换的角度（0--180);
-		if (stopY - startY < 0) {// 如果Y愁小�?说明角度在第三或者第四像�?
+		if (stopY - startY < 0) {// 如果Y愁小�?说明角度在第三或者第四像�?
 			rotate = 360 - rotate;
 		}
 		return rotate;
@@ -279,7 +279,7 @@ public class SquaredPassWord extends View {
 	}
 
 	/**
-	 * 表示�?���?
+	 * 表示�?���?
 	 * 
 	 * @author lanhaizhong
 	 * 
@@ -287,11 +287,11 @@ public class SquaredPassWord extends View {
 	class Point {
 
 		private int id;// 点的id
-		private int nextID;// 连向下一个�?点的id
+		private int nextID;// 连向下一个�?点的id
 		private int x;// 点的左上角x坐标
 		private int y;// 点的左上角的y坐标
 		private boolean isSelected;// 该节点是否被选中
-		private int width;// 点的长度 这里只�?虑正方形
+		private int width;// 点的长度 这里只�?虑正方形
 
 		public Point() {
 			super();
@@ -365,7 +365,7 @@ public class SquaredPassWord extends View {
 		}
 
 		/**
-		 * 判断某个坐标是否这个这个表示�?��点的图形区域�?
+		 * 判断某个坐标是否这个这个表示�?��点的图形区域�?
 		 * 
 		 * @param x
 		 * @param y
