@@ -241,6 +241,7 @@ public class login extends Activity {
 	}
 	protected void connect() {
 		// TODO Auto-generated method stub
+		
 		GetWEBTask get=new GetWEBTask();
 		get.execute("");
 	}
@@ -400,6 +401,7 @@ public class login extends Activity {
     		LayoutParams layoutParams = window.getAttributes();
     		layoutParams.width = LayoutParams.MATCH_PARENT;
     		mDialog.show();
+    		clickNum = 0;
     	}
     	return super.onTouchEvent(event);
     }
