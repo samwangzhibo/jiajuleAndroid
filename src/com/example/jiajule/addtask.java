@@ -108,11 +108,11 @@ public class addtask extends Activity {
 		Log.e(TAG, op);
 		if(op.equals(OldRenWuTie.AddTask)){
 			Log.e(TAG, "op is add");
-		path=URLAPI.ADD_TASK+"?username="+ActivtyUtil.GetUsernameSharedPre(addtask.this)+"&&msg="+et.getText().toString().trim()+"&&time="+date;
+		path=URLAPI.ADD_TASK()+"?username="+ActivtyUtil.GetUsernameSharedPre(addtask.this)+"&&msg="+et.getText().toString().trim()+"&&time="+date;
 		}
 		else {
 			Log.e(TAG,"op is update");
-		path=URLAPI.UPDATE_TASK+"?msg="+et.getText().toString().trim()+"&&id="+id;
+		path=URLAPI.UPDATE_TASK()+"?msg="+et.getText().toString().trim()+"&&id="+id;
 		}
 		Log.e(TAG, "addtask path:"+path);
 		

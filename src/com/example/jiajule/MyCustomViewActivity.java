@@ -109,7 +109,7 @@ public class MyCustomViewActivity extends Activity {
 					result=NetWork.UNCONNET_NETWORK;
 					return result;
 				}
-				String path=URLAPI.PASSUNLOCK+"?username="+ActivtyUtil.GetUsernameSharedPre(MyCustomViewActivity.this)+"&&password="+mypass+"&&time="+ActivtyUtil.GetNowTime();
+				String path=URLAPI.PASSUNLOCK()+"?username="+ActivtyUtil.GetUsernameSharedPre(MyCustomViewActivity.this)+"&&password="+mypass+"&&time="+ActivtyUtil.GetNowTime();
 				url=new URL(path);
 				try {
 					HttpURLConnection con=(HttpURLConnection) url.openConnection();

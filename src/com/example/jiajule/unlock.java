@@ -174,7 +174,7 @@ public class unlock extends Activity {
         	//比如doInBackground("param1","param2","param3") ，或是doInBackground() 。
         	//处理后台执行的任务，在后台线程执行 
         	
-			String path=URLAPI.PASSUNLOCK+"?username="+ActivtyUtil.GetUsernameSharedPre(unlock.this)+"&&password="+password+"&&time="+ActivtyUtil.GetNowTime(); 
+			String path=URLAPI.PASSUNLOCK()+"?username="+ActivtyUtil.GetUsernameSharedPre(unlock.this)+"&&password="+password+"&&time="+ActivtyUtil.GetNowTime(); 
 			Log.e(TAG, path);
 			try {
 				//判断有无网络

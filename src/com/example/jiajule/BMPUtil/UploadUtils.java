@@ -1,6 +1,7 @@
 package com.example.jiajule.BMPUtil;
 
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -74,7 +76,7 @@ public class UploadUtils {
 				 * filename是文件的名字，包含后缀名的   比如:abc.png  
 				 */
 				
-				sb.append("Content-Disposition: form-data; name=\"img\"; filename=\""+file.getName()+"\""+LINE_END); 
+				sb.append("Content-Disposition: form-data; name=\"upload\"; filename=\""+file.getName()+"\""+LINE_END); 
 				sb.append("Content-Type: application/octet-stream; charset="+CHARSET+LINE_END);
 				sb.append(LINE_END);
 				dos.write(sb.toString().getBytes());
@@ -94,12 +96,19 @@ public class UploadUtils {
 				 * 获取响应码  200=成功
 				 * 当响应成功，获取响应的流  
 				 */
-				int res = conn.getResponseCode();  
+				
+				  InputStream iss = conn.getInputStream();  
+			      InputStreamReader isr = new InputStreamReader(iss, "utf-8");  
+			      BufferedReader br = new BufferedReader(isr);  
+			      String result = br.readLine();  
+			      return result;
+				
+				/*int res = conn.getResponseCode();  
 				Log.e(TAG, "response code:"+res);
 				if(res==200)
 				{
 			     return SUCCESS;
-				}
+				}*/
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -141,7 +150,7 @@ public class UploadUtils {
 	
 	
 	public static Bitmap GetBitmapByUsername(String username) throws Exception{
-		String path=URLAPI.GetPicture+username+".jpg";
+		String path=URLAPI.GetPicture()+username+".jpg";
 		
 		Log.e(TAG, "path = "+path);
 		URL url = new URL(path);

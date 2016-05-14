@@ -17,12 +17,18 @@ import android.content.SharedPreferences.Editor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +38,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.example.jiajule.BMPUtil.DownloadBMPTask;
 import com.example.jiajule.util.ActivtyUtil;
+import com.example.jiajule.util.LogUtil;
 import com.example.jiajule.util.NetWork;
 import com.example.jiajule.util.URLAPI;
 import com.jiajule.adapter.UserInfoAdapter;
@@ -61,6 +68,10 @@ public class login extends Activity {
     SQLiteDatabase db;
     String pass;
     UserInfo user;
+    
+    long lastClick;
+    int DELAY_TIME = 200;
+    int clickNum = 0;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +111,32 @@ public class login extends Activity {
 	 * 设置监听器事件
 	 */
 	private void setListenner() {
-		// TODO Auto-generated method stub
+		name_et.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				// TODO Auto-generated method stub
+				if(name_et.getText().toString() == ""){
+					im_username_delete.setVisibility(View.INVISIBLE);
+				}else{
+					im_username_delete.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		//数据库操作初始化
 	 	DBHelper dbhelper=new DBHelper(login.this);
 	 		db=dbhelper.getReadableDatabase();
@@ -205,9 +241,6 @@ public class login extends Activity {
 	}
 	protected void connect() {
 		// TODO Auto-generated method stub
-		
-		
-		
 		GetWEBTask get=new GetWEBTask();
 		get.execute("");
 	}
@@ -221,7 +254,8 @@ public class login extends Activity {
         	
         	name=name_et.getText().toString();
 			pass=pass_et.getText().toString();
-			String path=URLAPI.LOGIN+"?username="+name+"&&password="+pass;          
+			String path=URLAPI.getLoginUrl()+"?username="+name+"&&password="+pass;
+			LogUtil.log(path);
 			try {
 				//判断有无网络
 				if(!NetWork.NetWorkpanduan(login.this)){
@@ -233,6 +267,7 @@ public class login extends Activity {
 				url=new URL(path);
 				try {
 					HttpURLConnection con=(HttpURLConnection) url.openConnection();
+					LogUtil.log(path);
 					con.setDoOutput(true);  
 					con.setDoInput(true);  
 					con.setConnectTimeout(10000);  //设置连接超时为10s  
@@ -340,14 +375,32 @@ public class login extends Activity {
 	
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-    	// TODO Auto-generated method stub
-    	if(name_et.getText().toString() == null){
-			Log.e(tag,"name_et is null");
-			im_username_delete.setVisibility(View.INVISIBLE);
-		}else{
-			im_username_delete.setVisibility(View.VISIBLE);
-			Log.e(tag,"name_et is not null");
-		}
+    	if(System.currentTimeMillis() - lastClick < DELAY_TIME){
+    		clickNum++;
+    	}else{
+    		clickNum = 0;
+    	}
+    	lastClick = System.currentTimeMillis();
+    	if(clickNum == 7 ){
+    		//填写框
+    		final Dialog mDialog= new Dialog(login.this, R.style.Common_Dialog);
+    		mDialog.setCanceledOnTouchOutside(false);
+    		mDialog.setContentView(R.layout.choose_net_dialog);
+    		final EditText et =  (EditText) mDialog.findViewById(R.id.choose_net_dialog_et);
+    		CheckBox mcCheckBox = (CheckBox) mDialog.findViewById(R.id.choose_net_dialog_checkbox);
+    		mDialog.findViewById(R.id.choose_net_dialog_btn).setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					URLAPI.IP = et.getText().toString();
+					mDialog.dismiss();
+				}
+			});
+    		Window window = mDialog.getWindow();
+    		LayoutParams layoutParams = window.getAttributes();
+    		layoutParams.width = LayoutParams.MATCH_PARENT;
+    		mDialog.show();
+    	}
     	return super.onTouchEvent(event);
     }
 	@Override

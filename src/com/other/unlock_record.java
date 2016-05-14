@@ -68,7 +68,7 @@ public class unlock_record extends Activity {
 	private void GetWebData() {
 		// TODO Auto-generated method stub
 		GetJsonTask getjson = new GetJsonTask(mProgressBar,unlock_record.this);
-		getjson.execute(URLAPI.UNLOCK_RECORD+"?username="+ActivtyUtil.GetUsernameSharedPre(unlock_record.this));
+		getjson.execute(URLAPI.UNLOCK_RECORD()+"?username="+ActivtyUtil.GetUsernameSharedPre(unlock_record.this));
 		jarray=getjson.getJsonarray();
 		Log.e(tag,jarray.toString());
 			try {
@@ -109,7 +109,7 @@ public class unlock_record extends Activity {
         protected String doInBackground(String... params) {
         	
         	try {
-				murl=new URL(URLAPI.UNLOCK_RECORD+"?username="+ActivtyUtil.GetUsernameSharedPre(unlock_record.this));
+				murl=new URL(URLAPI.UNLOCK_RECORD()+"?username="+ActivtyUtil.GetUsernameSharedPre(unlock_record.this));
 				try {
 					if(!NetWork.NetWorkpanduan(unlock_record.this)){
 						

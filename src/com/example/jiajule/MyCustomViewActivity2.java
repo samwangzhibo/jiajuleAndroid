@@ -96,7 +96,7 @@ public class MyCustomViewActivity2 extends Activity {
 					result=NetWork.UNCONNET_NETWORK;
 					return result;
 				}
-				String path=URLAPI.UPDATE_MY_HOMEPASS+"?home_pass="+mypass+"&&username="+ActivtyUtil.GetUsernameSharedPre(MyCustomViewActivity2.this);
+				String path=URLAPI.UPDATE_MY_HOMEPASS()+"?home_pass="+mypass+"&&username="+ActivtyUtil.GetUsernameSharedPre(MyCustomViewActivity2.this);
 				url=new URL(path);
 				try {
 					HttpURLConnection con=(HttpURLConnection) url.openConnection();

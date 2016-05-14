@@ -140,7 +140,7 @@ public class MyInfo extends Activity{
        
         protected String doInBackground(String... params) {
         	 	username=ActivtyUtil.GetUsernameSharedPre(MyInfo.this);
-             	String path=URLAPI.GETMYINFO+"?username="+username;	
+             	String path=URLAPI.GETMYINFO()+"?username="+username;	
         	try {
 				murl=new URL(path);
 				try {

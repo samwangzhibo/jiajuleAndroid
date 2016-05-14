@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/login_im_icon"
-        android:layout_width="351dp"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/welcome" />
 

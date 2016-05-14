@@ -196,7 +196,7 @@ public class OldRenWuTie extends Activity {
 	            	//删除任务帖
 	            	//需要刷新ListView
 	            	MyWebTask mwt = new MyWebTask(OldRenWuTie.this);
-	            	mwt.execute(URLAPI.DELETE_TASK+"?id="+ids);
+	            	mwt.execute(URLAPI.DELETE_TASK()+"?id="+ids);
 	            	InitGetJsonTask();
 		             }  
 		         }  
@@ -209,7 +209,7 @@ public class OldRenWuTie extends Activity {
         protected String doInBackground(String... params) {
         	
         	try {
-				murl=new URL(URLAPI.GET_TASK_MSG);
+				murl=new URL(URLAPI.GET_TASK_MSG());
 				try {
 					if(!NetWork.NetWorkpanduan(OldRenWuTie.this)){
 						

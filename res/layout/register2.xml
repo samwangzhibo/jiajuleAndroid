@@ -32,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_alignRight="@+id/register_mypicture"
             android:background="@color/touming"
             android:text="未添加图片" />
@@ -95,7 +96,6 @@
         android:background="@color/white" >
 
         <ImageView
-            android:id="@+id/imageView1"
             android:layout_width="30dp"
             android:layout_height="33dp"
             android:src="@drawable/register_pass_icon2" />
@@ -131,7 +131,6 @@
         android:background="@color/white" >
 
         <ImageView
-            android:id="@+id/imageView1"
             android:layout_width="30dp"
             android:layout_height="33dp"
             android:src="@drawable/register_pass_icon2" />
@@ -166,7 +165,6 @@
         android:background="@color/white" >
 
         <ImageView
-            android:id="@+id/imageView1"
             android:layout_width="30dp"
             android:layout_height="33dp"
             android:src="@drawable/register_pass_icon2" />

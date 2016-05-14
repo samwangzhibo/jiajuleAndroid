@@ -150,7 +150,7 @@ public class renwutie extends Activity{
 		}else{
         	
 				try {
-					murl=new URL(URLAPI.GET_TASK_MSG);
+					murl=new URL(URLAPI.GET_TASK_MSG());
 				} catch (MalformedURLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

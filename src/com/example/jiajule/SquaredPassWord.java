@@ -15,7 +15,7 @@ import android.widget.ImageView;
 /**
  * @Title: SquaredPassWord.java
  * @Description: 九宫格密�?
- * @author lanhaizhong
+ * @author wzb
  * @date 2013�?�?6�?下午3:48:10
  * @version V1.0 Copyright (c) 2013 Company,Inc. All Rights Reserved.
  * 
@@ -68,7 +68,6 @@ public class SquaredPassWord extends View {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// TODO Auto-generated method stub
 		int width = getWidth() - getPaddingLeft() - getPaddingRight();
 		int height = getHeight() - getPaddingTop() - getPaddingBottom();
 		length = (width < height ? width : height);// 获取边长
@@ -136,6 +135,7 @@ public class SquaredPassWord extends View {
 		case MotionEvent.ACTION_MOVE:
 			moveX = (int) event.getX();
 			moveY = (int) event.getY();
+			if(points != null){
 			for (Point point : points) {
 				if (point.isInMyArea(moveX, moveY) && !point.isSelected()) {
 					tempPoint.setNextID(point.getId());
@@ -145,6 +145,7 @@ public class SquaredPassWord extends View {
 					startY = tempPoint.getCenterY();
 					passWBuffer.append(tempPoint.getId());
 				}
+			}
 			}
 			invalidate();
 			break;

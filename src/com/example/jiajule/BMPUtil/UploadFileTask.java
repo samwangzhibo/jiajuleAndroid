@@ -16,7 +16,7 @@ import android.widget.Toast;
  */
 public class UploadFileTask extends AsyncTask<String, Void, String>{
 	//public static final String requestURL="http://192.168.1.102:8080/ServerForPicture/FileUploadServlet";
-	public static final String requestURL=URLAPI.UPLOAD_BMP+"?username=";
+	public static final String requestURL=URLAPI.UPLOAD_BMP()+"?username=";
 			//"http://192.168.1.108:8080/MyServlet/servlet/UploadBMP?username=";
    /**
     *  可变长的输入参数，与AsyncTask.exucute()对应http://localhost:8080/ServerForPicture/FileUploadServlet
@@ -31,11 +31,11 @@ public class UploadFileTask extends AsyncTask<String, Void, String>{
     protected void onPostExecute(String result) {
         // 返回HTML页面的内容
         pdialog.dismiss(); 
-        if(UploadUtils.SUCCESS.equalsIgnoreCase(result)){
-        	Toast.makeText(context, "上传成功!",Toast.LENGTH_LONG ).show();
-        	Log.e("图片上传","成功");
-        }else{
+        if(UploadUtils.FAILURE.equalsIgnoreCase(result)){
         	Toast.makeText(context, "上传失败!",Toast.LENGTH_LONG ).show();
+        	Log.e("图片上传","失败");
+        }else{
+        	Toast.makeText(context, result,Toast.LENGTH_LONG ).show();
         	Log.e("图片上传","失败");
         }
     }

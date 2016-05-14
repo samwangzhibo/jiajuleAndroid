@@ -87,11 +87,12 @@ public class register extends Activity{
 				// TODO Auto-generated method stub
 				
 				
-				if(CheckNull(register.this, name, pass, jiaID, phone)){
+			/*	if(CheckNull(register.this, name, pass, jiaID, phone)){
 				WebTask wt=new WebTask();
 				wt.execute("");
 				
-				}
+				}*/
+				UploadPIC();
 			}
 		});
 		//上传图片
@@ -254,7 +255,7 @@ public class register extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			String path=URLAPI.REGISTE+"?username="+name.getText().toString()+"&&password="+pass.getText().toString()+"&&home_id="+jiaID.getText().toString()+"&&phone="+phone.getText().toString();
+			String path=URLAPI.getRegisteUrl()+"?username="+name.getText().toString()+"&&pass="+pass.getText().toString()+"&&home_id="+jiaID.getText().toString()+"&&phone="+phone.getText().toString();
 			
 			try {
 				//判断有无网络

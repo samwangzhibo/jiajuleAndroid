@@ -20,8 +20,8 @@ public class ExampleApplication extends Application {
     public void onCreate() {    	     
     	 Log.d(TAG, "[ExampleApplication] onCreate");
          super.onCreate();
-         JPushInterface.init(this);  
-         JPushInterface.setDebugMode(true); 	
+        // JPushInterface.init(this);  
+        // JPushInterface.setDebugMode(true); 	
          //设置调试模式
             		
          //JPush
