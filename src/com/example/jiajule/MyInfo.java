@@ -134,6 +134,16 @@ public class MyInfo extends Activity{
 		
 		myinfo_icon = (ImageView) findViewById(R.id.login_im_icon);
 		im_back=(ImageView) findViewById(R.id.myinfo_back);
+		ImageView myinfoGoHome = (ImageView) findViewById(R.id.myinfo_goto_home);
+		myinfoGoHome.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(MyInfo.this, HomeInfo.class);
+				it.putExtra("home_id", tv_homeid.getText().toString());
+				startActivity(it);
+			}
+		});
 	}
 	class GetWEBTask extends AsyncTask<String,Integer,String> {//锟教筹拷AsyncTask 
         @Override 

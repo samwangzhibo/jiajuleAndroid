@@ -10,8 +10,10 @@ public class URLAPI {
 		URLAPI.isPhp = isPhp;
 	}
 
-	public static String IP="192.168.31.129";
-	//public static String IP="anniezhang.esy.es";
+	//public static String HOME_IP="192.168.31.129";
+	public static String HOME_IP="192.168.1.100";
+	public static String IP="anniezhang.esy.es";
+	//public static String IP = HOME_IP;
 	
 	//public static final String GET_TASK_MSG = IP_HEAD+IP+"/MyServlet/servlet/GetTaskServlet";
 	///public static final String ADD_TASK=IP_HEAD+IP+"/MyServlet/servlet/AddTaskServlet";
@@ -33,6 +35,12 @@ public class URLAPI {
 		}
 		return IP_HEAD+IP+"/MyServlet/servlet/LoginServlet";
 	}
+	public static String ShowHomePeople(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/select/ShowHomePeople.php";
+		}
+		return IP_HEAD+IP+"/MyServlet/servlet/ShowHomePeople";
+	}
 	public static String getRegisteUrl(){
 		if (isPhp) {
 			return IP_HEAD+IP+"/php_login/areg.php";
@@ -40,6 +48,9 @@ public class URLAPI {
 		return IP_HEAD+IP+"/MyServlet/servlet/RegisterServlet";
 	}
 	public static String GET_TASK_MSG(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/select/GetTask.php";
+		}
 		return IP_HEAD+IP+"/MyServlet/servlet/GetTaskServlet";
 	}
 	public static String ADD_TASK(){
@@ -49,21 +60,33 @@ public class URLAPI {
 		return IP_HEAD+IP+"/MyServlet/servlet/AddTaskServlet";
 	}
 	public static String UPDATE_TASK(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/update/UpdateTask.php";
+		}
 		return IP_HEAD+IP+"/MyServlet/servlet/UpdateTaskServlet";
 	}
 	public static String DELETE_TASK(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/del/DeleteTask.php";
+		}
 		return IP_HEAD+IP+"/MyServlet/servlet/DeleteTaskServlet";
 	}
 	public static String GETMYINFO(){
 		if (isPhp) {
-			return IP_HEAD+IP+"/php_login/GetMyInfo.php";
+			return IP_HEAD+IP+"/php_login/select/GetMyInfo.php";
 		}
 		return IP_HEAD+IP+"/MyServlet/servlet/GetMyInfo";
 	}
 	public static String PASSUNLOCK(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/select/PassUnlock.php";
+		}
 		return IP_HEAD+IP+"/MyServlet/servlet/UnLock";
 	}
 	public static String UPDATE_MY_HOMEPASS(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/update/UpdateHomePass.php";
+		}
 		return IP_HEAD+IP+"/MyServlet/servlet/UpdateHomePass";
 	}
 	public static String GetPicture(){
@@ -73,6 +96,9 @@ public class URLAPI {
 		return IP_HEAD+IP+"/MyServlet/ImagesUploaded/";
 	}
 	public static String UNLOCK_RECORD(){
+		if (isPhp) {
+			return IP_HEAD+IP+"/php_login/select/UnlockRecord.php";
+		}
 		return IP_HEAD+IP+"/MyServlet/servlet/GetUnlockMessage";
 	}
 	public static String UPLOAD_BMP(){

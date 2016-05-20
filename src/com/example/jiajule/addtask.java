@@ -100,7 +100,8 @@ public class addtask extends Activity {
 			}
 		});
 
-	}class SendTaskMsg extends AsyncTask<String,Integer,String>{
+	}
+	class SendTaskMsg extends AsyncTask<String,Integer,String>{
 	
 	@Override
 	protected String doInBackground(String... params) {
@@ -112,7 +113,7 @@ public class addtask extends Activity {
 		}
 		else {
 			Log.e(TAG,"op is update");
-		path=URLAPI.UPDATE_TASK()+"?msg="+et.getText().toString().trim()+"&&id="+id;
+		path=URLAPI.UPDATE_TASK()+"?msg="+et.getText().toString().trim()+"&&id="+id + "&&time="+date;
 		}
 		Log.e(TAG, "addtask path:"+path);
 		
@@ -146,6 +147,7 @@ public class addtask extends Activity {
 				 
 				 dis.close();
 				 is.close();
+				 TaskProgressDialog.dismiss();
 				 con.disconnect();  
 /*					 if(con.getResponseCode() != 200){
 						result=NetWork.ERROR_NETWORK;

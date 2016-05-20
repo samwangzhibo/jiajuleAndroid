@@ -229,9 +229,7 @@ public class login extends Activity {
 							imge_user_head.setImageDrawable(imagUserHead.getDrawable());
 							txt_login_show_name.setText(txtUserName.getText());*/
 							
-							
 							dialog.dismiss();
-							
 							
 						}
 					});	
@@ -255,7 +253,7 @@ public class login extends Activity {
         	
         	name=name_et.getText().toString();
 			pass=pass_et.getText().toString();
-			String path=URLAPI.getLoginUrl()+"?username="+name+"&&password="+pass;
+			String path=URLAPI.getLoginUrl()+"?username="+name+"&password="+pass;
 			LogUtil.log(path);
 			try {
 				//判断有无网络
@@ -307,9 +305,7 @@ public class login extends Activity {
           } 
   
          protected void onPostExecute(String result) {//后台任务执行完之后被调用，在ui线程执行 
-        	 
-
-				
+        	 		
         	 NetWork.NetResultChuli(login.this, result, mprogressdialog);
         	 
         	 if(result.equals("success")){
@@ -388,6 +384,17 @@ public class login extends Activity {
     		mDialog.setCanceledOnTouchOutside(false);
     		mDialog.setContentView(R.layout.choose_net_dialog);
     		final EditText et =  (EditText) mDialog.findViewById(R.id.choose_net_dialog_et);
+    		Button defaultIpBtn = (Button) mDialog.findViewById(R.id.default_ip);
+    		defaultIpBtn.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					URLAPI.IP = URLAPI.HOME_IP;
+					Toast.makeText(login.this, "采用家庭默认IP", 100).show();
+					mDialog.dismiss();
+				}
+			});
+    		
     		CheckBox mcCheckBox = (CheckBox) mDialog.findViewById(R.id.choose_net_dialog_checkbox);
     		mDialog.findViewById(R.id.choose_net_dialog_btn).setOnClickListener(new View.OnClickListener() {
 				

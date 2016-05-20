@@ -87,11 +87,10 @@ public class register extends Activity{
 				// TODO Auto-generated method stub
 				
 				
-			/*	if(CheckNull(register.this, name, pass, jiaID, phone)){
+				if(CheckNull(register.this, name, pass, jiaID, phone)){
 				WebTask wt=new WebTask();
 				wt.execute("");
-				
-				}*/
+				}
 				UploadPIC();
 			}
 		});

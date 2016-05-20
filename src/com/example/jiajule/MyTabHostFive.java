@@ -210,6 +210,7 @@ public class MyTabHostFive extends TabActivity {
 		});
 		
 		slide_menu1=(TextView) findViewById(R.id.slide_menu1);
+		slide_menu1.setText(ActivtyUtil.GetUsernameSharedPre(MyTabHostFive.this));
 		slide_menu1.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -233,15 +234,15 @@ public class MyTabHostFive extends TabActivity {
 		});
 		slide_menu3.setOnClickListener(new View.OnClickListener() {
 	
-	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		ActivtyUtil.PutUsernameSharedPre(MyTabHostFive.this, "nobody");
-		Intent it=new Intent(MyTabHostFive.this,login.class);
-		startActivity(it);
-		finish();
-	}
-});
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				ActivtyUtil.PutUsernameSharedPre(MyTabHostFive.this, "nobody");
+				Intent it=new Intent(MyTabHostFive.this,login.class);
+				startActivity(it);
+				finish();
+			}
+		});
 		slide_menu4.setOnClickListener(new View.OnClickListener() {
 	
 	@Override

@@ -16,6 +16,7 @@ import com.example.jiajule.util.URLAPI;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
@@ -62,9 +63,6 @@ public class MyCustomViewActivity2 extends Activity {
 					sharedata.commit();*/
 					
 					connect();
-					Toast.makeText(MyCustomViewActivity2.this, "设置成功", 2000).show();
-					Intent it=new Intent(MyCustomViewActivity2.this,MyTabHostFive.class);
-					startActivity(it);
 					break;
 
 				default:
@@ -79,10 +77,21 @@ public class MyCustomViewActivity2 extends Activity {
 	
 	protected void connect() {
 		// TODO Auto-generated method stub
-		GetWEBTask get=new GetWEBTask();
+		GetWEBTask get=new GetWEBTask(MyCustomViewActivity2.this, mprogressdialog, result, mypass);
 		get.execute("");
 	}
-	public class GetWEBTask extends AsyncTask<String, Integer, String>{
+	
+	public static class GetWEBTask extends AsyncTask<String, Integer, String>{
+		private Context context;
+		private ProgressDialog mprogressdialog;
+		private String result;
+		private String mypass;
+		public GetWEBTask(Context context, ProgressDialog mprogressdialog, String result, String mypass){
+			this.context = context;
+			this.mprogressdialog = mprogressdialog;
+			this.result = result;
+			this.mypass = mypass;
+		}
 		@Override 
         protected String doInBackground(String... params) {
         	//String... params表示的是可变参数列表，也就是说，这样的方法能够接受的参数个数是可变的，但不论多少，必须都是String类型的。
@@ -91,13 +100,13 @@ public class MyCustomViewActivity2 extends Activity {
         	          
 			try {
 				//判断有无网络
-				if(!NetWork.NetWorkpanduan(MyCustomViewActivity2.this)){
+				if(!NetWork.NetWorkpanduan(context)){
 					
 					result=NetWork.UNCONNET_NETWORK;
 					return result;
 				}
-				String path=URLAPI.UPDATE_MY_HOMEPASS()+"?home_pass="+mypass+"&&username="+ActivtyUtil.GetUsernameSharedPre(MyCustomViewActivity2.this);
-				url=new URL(path);
+				String path=URLAPI.UPDATE_MY_HOMEPASS()+"?home_pass="+mypass+"&&username="+ActivtyUtil.GetUsernameSharedPre(context);
+				URL url=new URL(path);
 				try {
 					HttpURLConnection con=(HttpURLConnection) url.openConnection();
 					con.setDoOutput(true);  
@@ -108,7 +117,7 @@ public class MyCustomViewActivity2 extends Activity {
 					con.setUseCaches(false);  
 					con.connect();
 					
-					 is=con.getInputStream();
+					 InputStream is=con.getInputStream();
 					 DataInputStream dis=new DataInputStream(is);
 					 result=dis.readLine();
 					 System.out.println(result);
@@ -138,32 +147,29 @@ public class MyCustomViewActivity2 extends Activity {
           } 
   
          protected void onPostExecute(String result) {//后台任务执行完之后被调用，在ui线程执行 
-        	 NetWork.NetResultChuli(MyCustomViewActivity2.this, result, mprogressdialog);
+        	 //NetWork.NetResultChuli(context, result, mprogressdialog);
+        	 mprogressdialog.dismiss();
         	 
         	 if(result.equals("success")){
 				 //取消弹框
-				mprogressdialog.dismiss();
-				Toast.makeText(MyCustomViewActivity2.this, "解锁成功", 3000).show();
-				Intent it=new Intent(MyCustomViewActivity2.this,MyTabHostFive.class);			
-				startActivity(it);
-				finish();
+				Toast.makeText(context, "设置成功", 2000).show();
+				Intent it=new Intent(context,MyTabHostFive.class);			
+				context.startActivity(it);
+				((Activity) context).finish();
 			 }else if(result.equals("lose")){
-				 mprogressdialog.dismiss();
-				 Toast.makeText(MyCustomViewActivity2.this, "解锁失败", 3000).show();
+				 Toast.makeText(context, "设置失败", 3000).show();
 			 }
 			 else if(result.equals("error")){
-				 mprogressdialog.dismiss();
-				 Toast.makeText(MyCustomViewActivity2.this, "服务器出错。。。。", 3000).show();
+				 Toast.makeText(context, "服务器出错。。。。", 3000).show();
 				 } 
 			 else{
-				 mprogressdialog.dismiss();
-				 Toast.makeText(MyCustomViewActivity2.this, "unknowen error", 3000).show();
+				 Toast.makeText(context, "unknowen error", 3000).show();
 			 }		 
           } 
           
         protected void onPreExecute () {
         	//在 doInBackground(Params...)之前被调用，在ui线程执行        
-			mprogressdialog=new ProgressDialog(MyCustomViewActivity2.this);
+			mprogressdialog=new ProgressDialog(context);
 			mprogressdialog.setMessage("服务器通信中。。。。");
 			mprogressdialog.show();
 			mprogressdialog.setCancelable(false);

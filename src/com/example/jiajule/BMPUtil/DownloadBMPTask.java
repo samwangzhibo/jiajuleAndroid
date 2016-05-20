@@ -78,7 +78,6 @@ public class DownloadBMPTask extends AsyncTask<String, Void, Bitmap>{
 				           bm = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/jiajule/"+params[0]+".jpg");
 				           return bm;
 				        }
-			          else file.createNewFile();
 				}
 				bm= UploadUtils.GetBitmapByUsername(params[0]);
 				//下载完后保存在SD卡中

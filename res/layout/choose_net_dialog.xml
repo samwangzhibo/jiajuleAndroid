@@ -23,6 +23,15 @@
 	    android:textColor="@color/black"
 	    android:textSize="12dp" 
 	    />
+	<Button 
+	    android:id="@+id/default_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="default_home_ip"
+        android:textSize="15dp"
+	    />
     <Button
         android:id="@+id/choose_net_dialog_btn"
         android:layout_width="wrap_content"

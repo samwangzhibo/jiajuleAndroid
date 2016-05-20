@@ -1,4 +1,4 @@
-package com.example.jiajule.BMPUtil;
+ï»¿package com.example.jiajule.BMPUtil;
 
 
 import java.io.BufferedReader;
@@ -16,10 +16,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,37 +31,103 @@ import com.example.jiajule.util.URLAPI;
  * 
  * 
  */
+@SuppressLint("NewApi")
 public class UploadUtils {
 	private static final String TAG = "uploadFile";
-	private static final int TIME_OUT = 10*10000000;   //³¬Ê±Ê±¼ä
-	private static final String CHARSET = "utf-8"; //ÉèÖÃ±àÂë
+	private static final int TIME_OUT = 10*10000000;   
+	private static final String CHARSET = "utf-8"; 
 	public static final String SUCCESS="1";
 	public static final String FAILURE="0";
-	/**
-	 * 
-	 */
-	public static String uploadFile(File file,String RequestURL)
+	
+	 /* ä¸Šä¼ æ–‡ä»¶è‡³Serverçš„æ–¹æ³• */
+	public static String uploadFile(File uploadFile,String RequestURL)
+    {
+        String end = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        try
+        {
+            URL url = new URL(RequestURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+          /* Output to the connection. Default is false,
+             set to true because post method must write something to the connection */
+            con.setDoOutput(true);
+          /* Read from the connection. Default is true.*/
+            con.setDoInput(true);
+          /* Post cannot use caches */
+            con.setUseCaches(false);
+          /* Set the post method. Default is GET*/
+            con.setRequestMethod("POST");
+          /* è®¾ç½®è¯·æ±‚å±æ€§ */
+            con.setRequestProperty("Connection", "Keep-Alive");
+            con.setRequestProperty("Charset", "UTF-8");
+            con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+          /*è®¾ç½®StrictMode å¦åˆ™HTTPURLConnectionè¿æ¥å¤±è´¥ï¼Œå› ä¸ºè¿™æ˜¯åœ¨ä¸»è¿›ç¨‹ä¸­è¿›è¡Œç½‘ç»œè¿æ¥*/
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+          /* è®¾ç½®DataOutputStreamï¼ŒgetOutputStreamä¸­é»˜è®¤è°ƒç”¨connect()*/
+            DataOutputStream ds = new DataOutputStream(con.getOutputStream());  //output to the connection
+            ds.writeBytes(twoHyphens + boundary + end);
+            ds.writeBytes("Content-Disposition: form-data; " +
+                    "name=\"file\";filename=\"" +
+                    uploadFile.getName() + "\"" + end);
+            ds.writeBytes(end);
+          /* å–å¾—æ–‡ä»¶çš„FileInputStream */
+            FileInputStream fStream = new FileInputStream(uploadFile);
+          /* è®¾ç½®æ¯æ¬¡å†™å…¥8192bytes */
+            int bufferSize = 8192;
+            byte[] buffer = new byte[bufferSize];   //8k
+            int length = -1;
+          /* ä»æ–‡ä»¶è¯»å–æ•°æ®è‡³ç¼“å†²åŒº */
+            while ((length = fStream.read(buffer)) != -1)
+            {
+            /* å°†èµ„æ–™å†™å…¥DataOutputStreamä¸­ */
+                ds.write(buffer, 0, length);
+            }
+            ds.writeBytes(end);
+            ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
+          /* å…³é—­æµï¼Œå†™å…¥çš„ä¸œè¥¿è‡ªåŠ¨ç”ŸæˆHttpæ­£æ–‡*/
+            fStream.close();
+          /* å…³é—­DataOutputStream */
+            ds.close();
+          /* ä»è¿”å›çš„è¾“å…¥æµè¯»å–å“åº”ä¿¡æ¯ */
+            InputStream is = con.getInputStream();  //input from the connection æ­£å¼å»ºç«‹HTTPè¿æ¥
+            int ch;
+            StringBuffer b = new StringBuffer();
+            while ((ch = is.read()) != -1)
+            {
+                b.append((char) ch);
+            }
+          /* æ˜¾ç¤ºç½‘é¡µå“åº”å†…å®¹ */
+            return b.toString();
+        } catch (Exception e)
+        {
+            /* æ˜¾ç¤ºå¼‚å¸¸ä¿¡æ¯ */
+           return FAILURE;
+        }
+    }
+	
+	public static String uploadFile2(File file,String RequestURL)
 	{
-		String  BOUNDARY =  UUID.randomUUID().toString();  //±ß½ç±êÊ¶   Ëæ»úÉú³É
+		String  BOUNDARY =  UUID.randomUUID().toString();  
 		String PREFIX = "--" , LINE_END = "\r\n"; 
-		String CONTENT_TYPE = "multipart/form-data";   //ÄÚÈİÀàĞÍ
+		String CONTENT_TYPE = "multipart/form-data";   
 		
 		try {
 			URL url = new URL(RequestURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(TIME_OUT);
 			conn.setConnectTimeout(TIME_OUT);
-			conn.setDoInput(true);  //ÔÊĞíÊäÈëÁ÷
-			conn.setDoOutput(true); //ÔÊĞíÊä³öÁ÷
-			conn.setUseCaches(false);  //²»ÔÊĞíÊ¹ÓÃ»º´æ
-			conn.setRequestMethod("POST");  //ÇëÇó·½Ê½
-			conn.setRequestProperty("Charset", CHARSET);  //ÉèÖÃ±àÂë
+			conn.setDoInput(true); 
+			conn.setDoOutput(true);
+			conn.setUseCaches(false); 
+			conn.setRequestMethod("POST"); 
+			conn.setRequestProperty("Charset", CHARSET);  
 			conn.setRequestProperty("connection", "keep-alive");   
 			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY); 
 			if(file!=null)
 			{
 				/**
-				 * µ±ÎÄ¼ş²»Îª¿Õ£¬°ÑÎÄ¼ş°ü×°²¢ÇÒÉÏ´«
+				 * é”Ÿæ–¤æ‹·é”Ÿä¾¥ç¡·æ‹·é”Ÿæ–¤æ‹·ä¸ºé”Ÿç§¸ï½æ‹·é”Ÿæ–¤æ‹·é”Ÿä¾¥ç¡·æ‹·é”Ÿæ–¤æ‹·è£…é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿè¾ƒè¾¾æ‹·
 				 */
 				OutputStream outputSteam=conn.getOutputStream();
 				
@@ -69,12 +137,8 @@ public class UploadUtils {
 				sb.append(BOUNDARY);
 				sb.append(LINE_END);
 				//String PREFIX = "--" , LINE_END = "\r\n"; 
-				//String CONTENT_TYPE = "multipart/form-data";  ÄÚÈİÀàĞÍ
-				/**
-				 * ÕâÀïÖØµã×¢Òâ£º
-				 * nameÀïÃæµÄÖµÎª·şÎñÆ÷¶ËĞèÒªkey   Ö»ÓĞÕâ¸ökey ²Å¿ÉÒÔµÃµ½¶ÔÓ¦µÄÎÄ¼ş
-				 * filenameÊÇÎÄ¼şµÄÃû×Ö£¬°üº¬ºó×ºÃûµÄ   ±ÈÈç:abc.png  
-				 */
+				//String CONTENT_TYPE = "multipart/form-data";  
+				
 				
 				sb.append("Content-Disposition: form-data; name=\"upload\"; filename=\""+file.getName()+"\""+LINE_END); 
 				sb.append("Content-Type: application/octet-stream; charset="+CHARSET+LINE_END);
@@ -92,10 +156,7 @@ public class UploadUtils {
 				byte[] end_data = (PREFIX+BOUNDARY+PREFIX+LINE_END).getBytes();
 				dos.write(end_data);
 				dos.flush();
-				/**
-				 * »ñÈ¡ÏìÓ¦Âë  200=³É¹¦
-				 * µ±ÏìÓ¦³É¹¦£¬»ñÈ¡ÏìÓ¦µÄÁ÷  
-				 */
+				
 				
 				  InputStream iss = conn.getInputStream();  
 			      InputStreamReader isr = new InputStreamReader(iss, "utf-8");  
@@ -120,25 +181,25 @@ public class UploadUtils {
 	public static Bitmap GetBitmapIfFileEixt(String username,Context context){
 		Bitmap bm;
 		try {
-			//ÎÄ¼şÊÇ·ñ´æÔÚ£¬´æÔÚ¾ÍÖ±½Ó¶ÁÈ¡
+			//é”Ÿä¾¥ç¡·æ‹·é”Ÿè§’å‡¤æ‹·é”Ÿæ–¤æ‹·å†¢é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·è¯°é”Ÿè¡—æ†‹æ‹·ä½£é”Ÿé¥ºï¿½
 			if(UploadUtils.hasSdcard()){
 				 File  file1 = new File(Environment.getExternalStorageDirectory(),"jiajule");
 		          if(!file1.exists())
 		        	  file1.mkdirs();  
 		          File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/jiajule/"+username+".jpg");
 		          if(file.exists()){
-		        	  	//½âÎöÎÄ¼şÎªbitmap
+		        	  	//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿä¾¥ç¡·æ‹·ä¸ºbitmap
 			           bm = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/jiajule/"+username+".jpg");
 			           return bm;
 			        }
 		          else file.createNewFile();
 			}
 			bm= UploadUtils.GetBitmapByUsername(username);
-			//ÏÂÔØÍêºó±£´æÔÚSD¿¨ÖĞ
+			//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·èŸŠï¼”é”Ÿæ–¤æ‹·é”ŸçµŠDé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 			if(bm != null){
 			 UploadUtils.saveMyBitmap(context,username,bm);
 			}else 
-				Log.e(TAG, "bitmapÎª¿Õ£¬±£´æÍ¼Æ¬Ê§°Ü");
+				Log.e(TAG, "bitmap");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,7 +213,7 @@ public class UploadUtils {
 	public static Bitmap GetBitmapByUsername(String username) throws Exception{
 		String path=URLAPI.GetPicture()+username+".jpg";
 		
-		Log.e(TAG, "path = "+path);
+		Log.e(TAG, "DownloadBmpTask path = "+path);
 		URL url = new URL(path);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setConnectTimeout(1000);
@@ -178,7 +239,7 @@ public class UploadUtils {
 		   } catch (FileNotFoundException e) {
 		    e.printStackTrace();
 		   }
-		   //Ö÷·½·¨
+		   //é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		   mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 		   try {
 		    fOut.flush();

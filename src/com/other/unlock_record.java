@@ -38,7 +38,7 @@ import com.example.jiajule.util.GetJsonTask;
 import com.example.jiajule.util.NetWork;
 import com.example.jiajule.util.URLAPI;
 
-public class unlock_record extends Activity {
+public class unlock_record extends Activity implements View.OnClickListener{
 	ProgressBar mProgressBar;
 	Button bt_refresh;
 	ListView lv;
@@ -95,6 +95,7 @@ public class unlock_record extends Activity {
 		bt_refresh=(Button) findViewById(R.id.unlock_record_refresh);
 		lv=(ListView) findViewById(R.id.unlock_record_lv);
 		tv = (TextView) findViewById(R.id.unlock_record_tv);
+		bt_refresh.setOnClickListener(this);
 	}
 	/*public boolean onKeyDown(int keyCode, KeyEvent event) {
 			 if(keyCode == KeyEvent.KEYCODE_BACK ){
@@ -213,6 +214,19 @@ public class unlock_record extends Activity {
           
           } 
           
-     }; 
+     }
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		switch (arg0.getId()) {
+		case R.id.unlock_record_refresh:
+			GetWEBTask sdf= new GetWEBTask();
+			sdf.execute("");
+			break;
+
+		default:
+			break;
+		}
+	}; 
 }
 

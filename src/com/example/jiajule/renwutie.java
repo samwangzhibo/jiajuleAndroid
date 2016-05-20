@@ -53,7 +53,7 @@ public class renwutie extends Activity{
 			// TODO Auto-generated method stub
 			
 			handresult=(String) msg.obj;
-			if(handresult.equals(NetWork.UNCONNET_NETWORK)){
+			if(handresult != null && handresult.equals(NetWork.UNCONNET_NETWORK)){
 				mProgressDialog.dismiss();
        		 Toast.makeText(renwutie.this,NetWork.UNCONNET_NETWORK, 3000).show();
 			}else{
@@ -65,8 +65,8 @@ public class renwutie extends Activity{
        				HashMap<String, String> mHashMap=new HashMap<String, String>();
        				Log.e(tag, "第"+(i+1)+"加入ArrayList");
        				mHashMap.put("id", array.getJSONObject(i).getString("id").toString());
-       				Log.e(tag, array.getJSONObject(i).getString("usename").toString());
-       				mHashMap.put("username",array.getJSONObject(i).getString("usename").toString());
+       				Log.e(tag, array.getJSONObject(i).getString("username").toString());
+       				mHashMap.put("username",array.getJSONObject(i).getString("username").toString());
        				mHashMap.put("msg", array.getJSONObject(i).getString("msg").toString());
        				mHashMap.put("time", array.getJSONObject(i).getString("time").toString());
        				data.add(mHashMap);
@@ -83,7 +83,7 @@ public class renwutie extends Activity{
 				e.printStackTrace();
 				 Toast.makeText(renwutie.this,"json解析出错", 3000).show();
 			}
-			      }
+		}
 			
 		}
 	};

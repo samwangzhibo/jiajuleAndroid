@@ -7,9 +7,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -87,7 +84,6 @@ public class OldRenWuTie extends Activity {
 				// TODO Auto-generated method stub
 				Intent it=new Intent(OldRenWuTie.this,addtask.class);
 				it.putExtra("op", AddTask);
-				
 				startActivity(it);
 				
 			}
@@ -104,34 +100,6 @@ public class OldRenWuTie extends Activity {
 				InitGetJsonTask();
 			}
 		});
-		
-		InitGetJsonTask();	
-/*		for(int i=0;i<id.length;i++){
-			HashMap<String, Object> mHp=new HashMap<String, Object>();
-			mHp.put("id", id[i]);
-			mHp.put("username", username[i]);
-			mHp.put("msg", msg[i]);
-			SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyyy-MM-dd");     
-			String date =   sDateFormat.format(new   java.util.Date()); 
-			mHp.put("time", time[i]);
-			Log.e(date,"第"+i+1+"加入");
-			data2.add(mHp);
-		}
-		Toast.makeText(this, data2.size()+"", 1000).show();
-		SimpleAdapter mSimpleAdapter=new SimpleAdapter(OldRenWuTie.this, data2, R.layout.renwutie_list, new String[]{"msg","time","id","username"}, new int[]{R.id.renwutie_item_msg,R.id.renwutie_item_time,R.id.renwutie_item_id,R.id.renwutie_item_username});
-		lv.setAdapter(mSimpleAdapter);*/
-		
-/*		mdatabasehelper=new DatabaseHelper(renwutie.this, "renwu.db", null, 1);
-		db=mdatabasehelper.getReadableDatabase();
-		cursor=db.query("renwu", new String[]{"_id","neirong"}, null,null , null, null, null);
-		
-		if(cursor.getCount()>0){
-			tv.setVisibility(View.GONE);
-		}
-		SimpleCursorAdapter sca=new SimpleCursorAdapter(renwutie.this, R.layout.renwutie_list, cursor, new String[]{"_id","neirong"}, new int[]{R.id.renwutielist1,R.id.renwutielist2});
-		lv.setAdapter(sca);*/
-		
-	
 	}
 	
 	void InitGetJsonTask(){
@@ -204,7 +172,7 @@ public class OldRenWuTie extends Activity {
 		     .create().show();
 
 	}
-	class GetWEBTask extends AsyncTask<String,Integer,String> {//锟教筹拷AsyncTask 
+	class GetWEBTask extends AsyncTask<String,Integer,String> {
         @Override 
         protected String doInBackground(String... params) {
         	
@@ -219,8 +187,8 @@ public class OldRenWuTie extends Activity {
 					con=(HttpURLConnection) murl.openConnection();
 					con.setDoOutput(true);  
 					con.setDoInput(true);  
-					con.setConnectTimeout(5000);  //设置连接超时为10s  
-					con.setReadTimeout(5000);     //读取数据超时也是10s  
+					con.setConnectTimeout(20000);  //设置连接超时为10s  
+					con.setReadTimeout(20000);     //读取数据超时也是10s  
 					con.setRequestMethod("GET");  
 					con.setUseCaches(false);  
 					con.connect();
@@ -239,29 +207,30 @@ public class OldRenWuTie extends Activity {
 				}
 				
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
         	return result;
          } 
           
-         protected void onProgressUpdate(Integer... progress) {//锟节碉拷锟斤拷publishProgress之锟襟被碉拷锟矫ｏ拷锟斤拷ui锟竭筹拷执锟斤拷 
+         protected void onProgressUpdate(Integer... progress) {
 
-          } 
+         } 
   
          protected void onPostExecute(String result) {
+        	 mprogressdialog.dismiss();
+        	 if (result == null) {
+				return;
+			}
         	 if(result.equals(NetWork.UNCONNET_NETWORK)){
-        		 mprogressdialog.dismiss();
+        		 
         		 Toast.makeText(OldRenWuTie.this,NetWork.UNCONNET_NETWORK, 3000).show();
         	 }
         	 else if(result.equals(NetWork.ERROR_NETWORK)){
-        		 mprogressdialog.dismiss();
         		 Toast.makeText(OldRenWuTie.this,NetWork.ERROR_NETWORK, 3000).show(); 
         	 }
         	 else{
         		 try {
-        			 mprogressdialog.dismiss();
         		 array=new JSONArray(result.toString());
         		 final ArrayList<HashMap<String, String>> data=new ArrayList<HashMap<String,String>>();
 				//JSONObject json=new JSONObject(result);
@@ -271,8 +240,8 @@ public class OldRenWuTie extends Activity {
         				Log.e(tag, "第"+(i+1)+"加入ArrayList");
         				mHashMap.put("id", array.getJSONObject(i).getString("id").toString());
         				//json_test=array.getJSONObject(i).getString("id").toString();
-        				mHashMap.put("username",array.getJSONObject(i).getString("usename").toString());
-        				 Log.e(tag, array.getJSONObject(i).getString("usename").toString());
+        				mHashMap.put("username",array.getJSONObject(i).getString("username").toString());
+        				 Log.e(tag, array.getJSONObject(i).getString("username").toString());
         				mHashMap.put("msg", array.getJSONObject(i).getString("msg").toString());
         				Log.e(tag, array.getJSONObject(i).getString("msg").toString());
         				mHashMap.put("time", array.getJSONObject(i).getString("time").toString());
@@ -314,7 +283,6 @@ public class OldRenWuTie extends Activity {
           } 
           
         protected void onPreExecute () {
-        	//锟斤拷 doInBackground(Params...)之前锟斤拷锟斤拷锟矫ｏ拷锟斤拷ui锟竭筹拷执锟斤拷        
 			mprogressdialog=new ProgressDialog(OldRenWuTie.this);
 			mprogressdialog.setMessage("服务器通信中。。。");
 			mprogressdialog.show();

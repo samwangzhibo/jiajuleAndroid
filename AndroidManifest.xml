@@ -147,7 +147,7 @@
         android:name="OldRenWuTie" 
         android:theme="@android:style/Theme.NoTitleBar" 
         ></activity>
-    <activity android:name="MyTabHostFive">
+    <activity android:name="MyTabHostFive" >
     </activity>
                 <activity android:name="com.other.lampcontrol">
     </activity>

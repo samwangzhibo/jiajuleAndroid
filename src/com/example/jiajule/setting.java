@@ -8,6 +8,7 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
+import com.example.jiajule.MyCustomViewActivity2.GetWEBTask;
 import com.example.jiajule.push.ExampleUtil;
 //import com.xmobileapp.cammonitor.R;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.app.*;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,8 @@ public class setting extends Activity{
 	Button bt2;
 	Button tag_bt;
 	EditText tag_et;
+	private ProgressDialog mprogressdialog;
+	private String result;
 	public void onCreate(Bundle savedInstanceState) {	
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.setting);
@@ -69,16 +73,11 @@ public class setting extends Activity{
 						final  String pwd2 = pwd.getText()
 						.toString();
 					
-						Editor sharedata = getSharedPreferences("data", 0).edit();
+						/*Editor sharedata = getSharedPreferences("data", 0).edit();
 						sharedata.putString("pws",pwd2);
-						sharedata.commit();
-						Toast.makeText(setting.this, "设置成功", 3000).show();
-							//TextView text=(TextView) findViewById(R.id.text);
-							//text.setText(username+"你好");	
-						Intent it=new Intent(setting.this,MyTabHostFive.class);
-						startActivity(it);
-						finish();
-
+						sharedata.commit();*/
+						connect(pwd2);
+						
 							}
 							}).setNegativeButton(R.string.close,
 							new DialogInterface.OnClickListener() {
@@ -128,6 +127,11 @@ public class setting extends Activity{
 					//JPushInterface.setAliasAndTags(getApplicationContext(), arg1, arg2, arg3);
 				}
 			});
+	}
+	protected void connect(String mypass) {
+		// TODO Auto-generated method stub
+		GetWEBTask get=new GetWEBTask(setting.this, mprogressdialog, result, mypass);
+		get.execute("");
 	}
 	private void initView() {
 		// TODO Auto-generated method stub

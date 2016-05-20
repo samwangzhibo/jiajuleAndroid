@@ -12,10 +12,10 @@
         android:layout_gravity="center"
         android:text="@string/homeinfo_title" />
 
-    <ListView
-        android:id="@+id/listView1"
+    <LinearLayout
+        android:id="@+id/home_info_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        />
 </LinearLayout>
