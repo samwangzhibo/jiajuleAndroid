@@ -3,6 +3,7 @@ package com.example.jiajule.util;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import android.R.bool;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -73,6 +74,9 @@ public class ActivtyUtil {
 	    	Log.e("wangzhibo","Íù"+key+"Ð´³É"+input);
 			sharedata.commit();
 	    } 
+	    public static boolean GetYuyinSwitcher(Context cxt){
+	    	return cxt.getSharedPreferences(jiajulemainActivity.SETTING_INFOS, 0).getBoolean("voiceSwitcher", true);
+	    }
 	    public static ProgressDialog CreateDialog(String info,Context context){
 	    	ProgressDialog prodia=new ProgressDialog(context);
 	    	prodia.setMessage(info);

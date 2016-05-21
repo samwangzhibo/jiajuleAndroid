@@ -240,7 +240,6 @@ public class register extends Activity{
 		               Intent it= PictureChoose.gallery();
 		               startActivityForResult(it, PictureChoose.PHOTO_REQUEST_GALLERY);
 	            }else{  	  
-	            	
 	            	 Intent it= PictureChoose.camera();
 	            	 startActivityForResult(it, PictureChoose.PHOTO_REQUEST_CAREMA);
 		             }  

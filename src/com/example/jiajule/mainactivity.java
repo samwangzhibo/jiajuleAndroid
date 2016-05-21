@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.example.jiajule.R.raw;
+import com.example.jiajule.util.ActivtyUtil;
 import com.other.lampcontrol;
 //import com.xmobileapp.cammonitor.R;
 
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.speech.RecognizerIntent;
+import android.test.ActivityUnitTestCase;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,18 +47,18 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.voice);
-		MediaPlayer player=MediaPlayer.create(mainactivity.this, R.raw.xiaomi);
-		player.start();
+		if(ActivtyUtil.GetYuyinSwitcher(this)){
+			MediaPlayer player=MediaPlayer.create(mainactivity.this, R.raw.xiaomi);
+			player.start();
+		}
 //		handler=new Handler(){
 //			@Override
 //			public void handleMessage(Message msg){
 //				switch(msg.what){
 //				case 0:
-//					Log.e("wangzhibo","锟斤拷锟斤拷锟斤拷MSG");
 //					Intent it=new Intent(mainactivity.this,CamMonitorClient.class);
 //					startActivity(it);
 //				case 1:
-//					Log.e("wangzhibo","锟斤拷锟斤拷锟斤拷MSG");
 //					Intent it2=new Intent(mainactivity.this,unlock.class);
 //					startActivity(it2);
 //				}
@@ -75,14 +77,14 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 	}
 
 	public void onClick(View v) {
-		//Toast.makeText(this, "锟斤拷锟斤拷", 0).show(); 
+		Toast.makeText(this, "searching ..... ", 0).show(); 
 		// do search
 		String vlaue=keyword.getText().toString().trim();
 //		if(keyword.getText().toString().trim().getBytes().length<3){
 //			Toast.makeText(mainactivity.this,"too short,please reinput", 3000).show();
 //		}
 //		else 
-		if(keyword.getText().toString().matches("")){
+		if(keyword.getText().toString().matches("监控")){
 //			Intent it=new Intent(mainactivity.this,CamMonitorClient.class);
 //			startActivity(it);
 			myThread mythread=new myThread();
@@ -91,7 +93,6 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 //			Message msg=new Message();
 //			msg.what=0;
 //			handler.sendMessage(msg);
-			Log.e("wangzhibo","锟斤拷锟斤拷锟斤拷msg");
 			try {
 				mythread.sleep(1000);
 				Intent it=new Intent(mainactivity.this,CamMonitorClient.class);
@@ -101,9 +102,8 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 				e.printStackTrace();
 			}
 		}
-		else if(keyword.getText().toString().matches("锟斤拷锟杰斤拷锟斤拷")){
+		else if(keyword.getText().toString().contains("解锁")){
 //			myThread mythread=new myThread();
-//			Log.e("wangzhibo","锟斤拷锟斤拷锟斤拷");
 //			mythread.start();
 //			if(flag.matches("1")){
 			myThread mythread=new myThread();
@@ -119,11 +119,11 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 			}
 			
 		}
-		else if(keyword.getText().toString().matches("")){
+		else if(keyword.getText().toString().contains("家电")){
 			
 			Intent it=new Intent(mainactivity.this,warning.class);
 			startActivity(it);
-		}else if(keyword.getText().toString().substring(0, 3).matches("锟斤拷要锟斤拷")){
+		}else if(keyword.getText().toString().substring(0, 3).matches("我要看")){
 			String str=keyword.getText().toString();
 			String str2=str.substring(3);
 			System.out.println(str2);
@@ -134,22 +134,32 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 			it.setData(Uri.parse(path.concat(str2)));
 			startActivity(it);	
 		}
-		else if(keyword.getText().toString().matches("锟斤拷要锟斤拷锟洁花锟斤拷")){
+		else if(keyword.getText().toString().contains("听音乐")){
 			Intent it=new Intent(mainactivity.this,mymusic.class);
 			startActivity(it);
 		}
-		else if(keyword.getText().toString().substring(0, 3).matches("锟斤拷要锟斤拷")){
+		else if(keyword.getText().toString().substring(0, 3).matches("我要看")){
 			Log.e("wangzhibo","mainactivity_woyaoting");
 			//Intent it=new Intent(mainactivity.this,TabMusicActivity.class);
 			//startActivity(it);
 			mainactivity.this.finish();
 			
 		}
-		else if(keyword.getText().toString().matches("锟斤拷职执锟界话")){
+		else if(keyword.getText().toString().contains("爸爸打电话")){
 			Intent intent = new Intent();
 		    intent.setAction("android.intent.action.CALL");
 		    intent.setData(Uri.parse("tel:13568918106"));
 		    startActivity(intent);
+		}else if(keyword.getText().toString().contains("给爸爸发短信")){
+			 Intent intent2 = new Intent();
+
+		        intent2.setAction(Intent.ACTION_SENDTO);
+
+		        intent2.setData(Uri.parse("smsto:13888888888"));
+
+		        intent2.putExtra("sms_body", "你好，我是家居乐语音助手。");
+
+		        startActivity(intent2); 
 		}
 		else{
 			Toast.makeText(mainactivity.this,"please reinput", 3000).show();
@@ -161,15 +171,15 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 		PackageManager pm = getPackageManager();
 		List<ResolveInfo> activities = pm
 				.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
-		if (activities.size() != 0) { // 锟斤拷锟斤拷锟斤拷锟斤拷识锟斤拷锟斤拷锟�
+		if (activities.size() != 0) { 
 			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 			startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
-		} else {// 未锟斤拷装锟斤拷锟斤拷识锟斤拷锟斤拷锟斤拷锟斤拷锟绞撅拷锟斤拷锟紾oogle Voice
+		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("锟斤拷馨锟斤拷示");
-			builder.setMessage("锟斤拷锟斤拷识锟斤拷锟斤拷要锟矫碉拷Voice Search锟斤拷锟斤拷锟斤拷欠锟绞硷拷锟斤拷锟�");
-			builder.setPositiveButton("锟斤拷锟斤拷", new DialogInterface.OnClickListener() {
+			builder.setTitle("提示");
+			builder.setMessage("本地不存在Voice Search，立即 下载？");
+			builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
 					Intent intent = new Intent();
@@ -180,7 +190,7 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 					startActivity(intent);
 				}
 			});
-			builder.setNegativeButton("取锟斤拷", new DialogInterface.OnClickListener() {
+			builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
 
@@ -199,20 +209,20 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 				lvCandidate.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, matches));
 				//keyword.setText(matches.get(0));
 				keyword.setText(matches.get(0));
-				if(matches.get(0).matches("实时锟斤拷锟�")){
+				if(matches.get(0).contains("监控")){
 					Intent it=new Intent(mainactivity.this,CamMonitorClient.class);
 					startActivity(it);
 				}
-				else if(matches.get(0).matches("锟斤拷锟杰斤拷锟斤拷")){
+				else if(matches.get(0).contains("解锁")){
 					Intent it=new Intent(mainactivity.this,unlock.class);
 					startActivity(it);
 				}
-				else if(matches.get(0).matches("锟狡癸拷锟斤拷锟�")){
+				else if(matches.get(0).contains("家电")){
 					Intent it=new Intent(mainactivity.this,warning.class);
 					MediaPlayer player=MediaPlayer.create(mainactivity.this, R.raw.loading);
 					player.start();
 					startActivity(it);
-				}else if(matches.get(0).substring(0, 3).matches("锟斤拷要锟斤拷")){
+				}else if(matches.get(0).substring(0, 3).matches("我要")){
 					String str=matches.get(0);
 					String str2=str.substring(3);
 					System.out.println(str2);
@@ -223,7 +233,7 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 					it.setData(Uri.parse(path.concat(str2)));
 					startActivity(it);	
 				}
-				else if(matches.get(0).matches("锟斤拷要锟斤拷锟洁花锟斤拷")){
+				else if(matches.get(0).matches("我要听")){
 					MediaPlayer player=MediaPlayer.create(mainactivity.this, R.raw.loading);
 					player.start();
 					Intent it=new Intent(mainactivity.this,mymusic.class);
@@ -237,20 +247,20 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 					//startActivity(it);
 					mainactivity.this.finish();			*/		
 				}
-				else if(keyword.getText().toString().matches("锟斤拷职执锟界话")){
+				else if(keyword.getText().toString().contains("爸爸打电话")){
 					Intent intent = new Intent();
 				    intent.setAction("android.intent.action.CALL");
 				    intent.setData(Uri.parse("tel:13568918106"));
 				    startActivity(intent);
 				}
-				else if(keyword.getText().toString().matches("锟斤拷锟斤拷锟斤拷说锟揭筹拷锟斤拷锟斤拷")){
+				else if(keyword.getText().toString().contains("张三发短信")){
 					 Intent intent2 = new Intent();
 
 				        intent2.setAction(Intent.ACTION_SENDTO);
 
 				        intent2.setData(Uri.parse("smsto:13888888888"));
 
-				        intent2.putExtra("sms_body", "锟揭筹拷锟斤拷锟斤拷");
+				        intent2.putExtra("sms_body", "你好，我是家居乐语音助手。");
 
 				        startActivity(intent2); 
 				}
@@ -269,7 +279,7 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 			   i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			   i.addCategory(Intent.CATEGORY_HOME);
 			   startActivity(i);
-					}
+			}
 		 
 		 return super.onKeyDown(keyCode, event);
 		}
@@ -278,7 +288,6 @@ public class mainactivity extends Activity implements OnClickListener, OnItemCli
 		public void run(){
 			MediaPlayer player=MediaPlayer.create(mainactivity.this, R.raw.loading);
 			player.start();
-			Log.e("wangzhibo","锟斤拷锟斤拷锟斤拷loading");			
 		}
 //		public void sendmsg(int a){
 //			Message msg=new Message();

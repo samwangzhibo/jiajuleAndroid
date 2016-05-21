@@ -153,8 +153,6 @@ public class MyCustomViewActivity2 extends Activity {
         	 if(result.equals("success")){
 				 //取消弹框
 				Toast.makeText(context, "设置成功", 2000).show();
-				Intent it=new Intent(context,MyTabHostFive.class);			
-				context.startActivity(it);
 				((Activity) context).finish();
 			 }else if(result.equals("lose")){
 				 Toast.makeText(context, "设置失败", 3000).show();

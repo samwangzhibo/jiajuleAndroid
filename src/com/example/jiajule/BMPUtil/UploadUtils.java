@@ -67,6 +67,7 @@ public class UploadUtils {
           /* 设置DataOutputStream，getOutputStream中默认调用connect()*/
             DataOutputStream ds = new DataOutputStream(con.getOutputStream());  //output to the connection
             ds.writeBytes(twoHyphens + boundary + end);
+            //--*****\r\n
             ds.writeBytes("Content-Disposition: form-data; " +
                     "name=\"file\";filename=\"" +
                     uploadFile.getName() + "\"" + end);
@@ -85,6 +86,7 @@ public class UploadUtils {
             }
             ds.writeBytes(end);
             ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
+            //--*****--
           /* 关闭流，写入的东西自动生成Http正文*/
             fStream.close();
           /* 关闭DataOutputStream */

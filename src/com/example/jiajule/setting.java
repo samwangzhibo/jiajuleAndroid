@@ -14,6 +14,7 @@ import com.example.jiajule.push.ExampleUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +37,7 @@ public class setting extends Activity{
 	Button bt2;
 	Button tag_bt;
 	EditText tag_et;
+	private ToggleButton voiceSwitcher;
 	private ProgressDialog mprogressdialog;
 	private String result;
 	public void onCreate(Bundle savedInstanceState) {	
@@ -127,6 +130,31 @@ public class setting extends Activity{
 					//JPushInterface.setAliasAndTags(getApplicationContext(), arg1, arg2, arg3);
 				}
 			});
+			final SharedPreferences settings = getSharedPreferences(jiajulemainActivity.SETTING_INFOS,0);
+			boolean flag=settings.getBoolean("voiceSwitcher", true);
+			if (flag) {
+				voiceSwitcher.setChecked(true);
+			}else {
+				voiceSwitcher.setChecked(false);
+			}
+			voiceSwitcher.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					//当按钮第一次被点击时候响应事件
+					if (voiceSwitcher.isChecked()) {
+						Toast.makeText(setting.this, "语音开启", Toast.LENGTH_SHORT).show();
+						Editor dataEditer = settings.edit();
+						dataEditer.putBoolean("voiceSwitcher", true);
+						dataEditer.commit();
+					}else{
+						Toast.makeText(setting.this, "语音关闭", Toast.LENGTH_SHORT).show();
+						Editor dataEditer = settings.edit();
+						dataEditer.putBoolean("voiceSwitcher", false);
+						dataEditer.commit();
+					}
+				}
+			});
 	}
 	protected void connect(String mypass) {
 		// TODO Auto-generated method stub
@@ -139,6 +167,7 @@ public class setting extends Activity{
 		bt2=(Button) findViewById(R.id.unlock_jiugongge);
 		tag_bt=(Button) findViewById(R.id.setting_tag_bt);
 		tag_et=(EditText) findViewById(R.id.setting_tag);
+		voiceSwitcher = (ToggleButton) findViewById(R.id.voice_switcher);
 	}
 	/**
 	 * alias调试 

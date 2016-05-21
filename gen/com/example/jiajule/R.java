@@ -242,7 +242,6 @@ public final class R {
         public static final int textView7=0x7f0a005a;
         public static final int title_bar_menu_btn=0x7f0a0031;
         public static final int title_bar_name=0x7f0a0032;
-        public static final int toggleButton1=0x7f0a0077;
         public static final int toggleButton3=0x7f0a0029;
         public static final int txt_show_name=0x7f0a008b;
         public static final int unlock=0x7f0a0052;
@@ -260,6 +259,7 @@ public final class R {
         public static final int unlock_yuyin=0x7f0a0076;
         public static final int username=0x7f0a0033;
         public static final int userselect_temple_delete=0x7f0a008c;
+        public static final int voice_switcher=0x7f0a0077;
         public static final int wp_ninelock=0x7f0a0025;
     }
     public static final class layout {
