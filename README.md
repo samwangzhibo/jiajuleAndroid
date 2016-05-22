@@ -18,4 +18,4 @@ jiajule Android App
 
 
 ##### 3. do as gif
-![sreenshot](https://github.com/samwangzhibo/jiajuleAndroid/jiajule.gif)
+![sreenshot](https://github.com/samwangzhibo/jiajuleAndroid/blob/master/jiajule.gif)
