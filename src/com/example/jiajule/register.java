@@ -17,6 +17,7 @@ import com.example.jiajule.util.PictureChoose;
 import com.example.jiajule.util.URLAPI;
 import com.example.jiajule.BMPUtil.*;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -37,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class register extends Activity{
 	private static final String TAG = "wangzhibo";
 	
@@ -91,7 +93,7 @@ public class register extends Activity{
 				WebTask wt=new WebTask();
 				wt.execute("");
 				}
-				UploadPIC();
+				
 			}
 		});
 		//上传图片
@@ -116,7 +118,9 @@ public class register extends Activity{
 //			picPath ="/storage/emulated/0/lqcache/fdfc03632dba1b80667bd3f0a30b846f.png";
 			if (picPath!=null) {
 				UploadFileTask uploadFileTask=new UploadFileTask(register.this);
-				uploadFileTask.execute(picPath,name.getText().toString());
+				uploadFileTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 
+						picPath,name.getText().toString());
+				//uploadFileTask.execute(picPath,name.getText().toString());
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -302,9 +306,7 @@ public class register extends Activity{
 				mprodialog.dismiss();
 				Toast.makeText(register.this,"注册成功，可以去登录了", 3000).show();
 				UploadPIC();
-				Intent it =new Intent(register.this,login.class);
-				startActivity(it);
-				finish();
+				
 			}else if(result.equals("lose")){
 				mprodialog.dismiss();
 				Toast.makeText(register.this,"出错了,请重新注册", 3000).show();

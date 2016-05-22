@@ -2,10 +2,12 @@ package com.example.jiajule.BMPUtil;
 
 import java.io.File;
 
+import com.example.jiajule.login;
 import com.example.jiajule.util.URLAPI;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,7 +27,7 @@ public class UploadFileTask extends AsyncTask<String, Void, String>{
    private  Activity context=null;
     public UploadFileTask(Activity ctx){
     	this.context=ctx;
-    	pdialog=ProgressDialog.show(context, "正在加载...", "系统正在处理您的请求");  
+    	pdialog=ProgressDialog.show(context, "图片上传中...", "系统正在处理您的请求");  
     }
     @Override
     protected void onPostExecute(String result) {
@@ -33,6 +35,8 @@ public class UploadFileTask extends AsyncTask<String, Void, String>{
         pdialog.dismiss();
         if("success".equals(result)){
         	Toast.makeText(context, "上传成功!",Toast.LENGTH_LONG ).show();
+        	//context.startActivity(new Intent(context, login.class));
+        	context.finish();
         }
         else if(UploadUtils.FAILURE.equalsIgnoreCase(result)){
         	Toast.makeText(context, "上传失败!",Toast.LENGTH_LONG ).show();

@@ -25,6 +25,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jiajule.util.LogUtil;
 import com.example.jiajule.util.URLAPI;
 
 /**
@@ -183,27 +184,23 @@ public class UploadUtils {
 	public static Bitmap GetBitmapIfFileEixt(String username,Context context){
 		Bitmap bm;
 		try {
-			//锟侥硷拷锟角凤拷锟斤拷冢锟斤拷锟斤拷诰锟街憋拷佣锟饺�
 			if(UploadUtils.hasSdcard()){
 				 File  file1 = new File(Environment.getExternalStorageDirectory(),"jiajule");
 		          if(!file1.exists())
 		        	  file1.mkdirs();  
 		          File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/jiajule/"+username+".jpg");
 		          if(file.exists()){
-		        	  	//锟斤拷锟斤拷锟侥硷拷为bitmap
 			           bm = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/jiajule/"+username+".jpg");
 			           return bm;
 			        }
-		          else file.createNewFile();
+		          //else file.createNewFile();
 			}
 			bm= UploadUtils.GetBitmapByUsername(username);
-			//锟斤拷锟斤拷锟斤拷蟊４锟斤拷锟絊D锟斤拷锟斤拷
 			if(bm != null){
 			 UploadUtils.saveMyBitmap(context,username,bm);
 			}else 
-				Log.e(TAG, "bitmap");
+				Log.e(TAG, "bitmap下载失败");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			bm=null;
 			return bm;
@@ -212,20 +209,27 @@ public class UploadUtils {
 	}
 	
 	
-	public static Bitmap GetBitmapByUsername(String username) throws Exception{
+	public static Bitmap GetBitmapByUsername(String username) {
 		String path=URLAPI.GetPicture()+username+".jpg";
 		
 		Log.e(TAG, "DownloadBmpTask path = "+path);
+		try{
 		URL url = new URL(path);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setConnectTimeout(1000);
+		conn.setConnectTimeout(20000);  //设置连接超时为10s  
+		conn.setReadTimeout(20000);     //读取数据超时也是10s
 		conn.setRequestMethod("GET");
+		conn.setUseCaches(false);
 		if(conn.getResponseCode() == 200){
 			InputStream inStream = conn.getInputStream();
 			Bitmap bitmap = BitmapFactory.decodeStream(inStream);
 			return bitmap;
 		}
-		return null;	
+		return null;
+		}catch(Exception e){
+			LogUtil.log("download image"+e);
+			return null;
+		}
 }
 	public static void saveMyBitmap(Context context,String bitName,Bitmap mBitmap){
 		   File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/jiajule/"+bitName+ ".jpg");
@@ -241,7 +245,6 @@ public class UploadUtils {
 		   } catch (FileNotFoundException e) {
 		    e.printStackTrace();
 		   }
-		   //锟斤拷锟斤拷锟斤拷
 		   mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 		   try {
 		    fOut.flush();

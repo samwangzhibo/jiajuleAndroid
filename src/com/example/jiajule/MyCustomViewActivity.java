@@ -157,8 +157,6 @@ public class MyCustomViewActivity extends Activity {
 				 //取消弹框
 				mprogressdialog.dismiss();
 				Toast.makeText(MyCustomViewActivity.this, "解锁成功", 3000).show();
-				Intent it=new Intent(MyCustomViewActivity.this,MyTabHostFive.class);			
-				startActivity(it);
 				finish();
 			 }else if(result.equals("lose")){
 				 mprogressdialog.dismiss();
@@ -186,13 +184,5 @@ public class MyCustomViewActivity extends Activity {
           
           } 
 		
-	}
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		 if(keyCode == KeyEvent.KEYCODE_BACK ){
-			 Intent it=new Intent(MyCustomViewActivity.this,MyTabHostFive.class);
-			 startActivity(it);
-			 finish();
-		 }
-	 return super.onKeyDown(keyCode, event);
 	}
 }

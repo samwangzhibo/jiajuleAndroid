@@ -10,8 +10,8 @@ public class URLAPI {
 		URLAPI.isPhp = isPhp;
 	}
 
-	//public static String HOME_IP="192.168.31.129";
-	public static String HOME_IP="192.168.1.100";
+	public static String HOME_IP="192.168.31.129";
+	//public static String HOME_IP="192.168.1.100";
 	public static String IP="anniezhang.esy.es";
 	//public static String IP = HOME_IP;
 	

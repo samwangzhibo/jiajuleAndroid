@@ -325,8 +325,6 @@ public class login extends Activity {
     				}else{
     				//加入数据库
     				DBOpreate.InsertUser(user, db);
-    				
-    				Log.e(tag,"insert");
     				}
     				
 				 //取消弹框

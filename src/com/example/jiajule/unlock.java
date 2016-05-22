@@ -232,7 +232,6 @@ public class unlock extends Activity {
         	 NetWork.NetResultChuli(unlock.this, result, mprogressdialog);
         	 
         	 if(result.equals("success")){
-        		
 				mprogressdialog.dismiss();
 				ActivtyUtil.openToast(unlock.this,"½âËø³É¹¦");
 			 }else if(result.equals("lose")){

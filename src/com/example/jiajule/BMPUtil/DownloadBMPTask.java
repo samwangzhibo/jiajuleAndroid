@@ -24,7 +24,7 @@ import android.widget.Toast;
  */
 public class DownloadBMPTask extends AsyncTask<String, Void, Bitmap>{
 	//public static final String requestURL="http://192.168.1.102:8080/ServerForPicture/FileUploadServlet";
-	public static final String requestURL="http://192.168.1.102:8080/MyServlet/servlet/UploadBMP?username=";
+	//public static final String requestURL="http://192.168.1.102:8080/MyServlet/servlet/UploadBMP?username=";
 	String TAG="wangzhibo";
   /**
     *  可变长的输入参数，与AsyncTask.exucute()对应http://localhost:8080/ServerForPicture/FileUploadServlet
@@ -42,12 +42,11 @@ public class DownloadBMPTask extends AsyncTask<String, Void, Bitmap>{
     protected void onPostExecute(Bitmap result) {
         // 返回HTML页面的内容
         pdialog.dismiss(); 
-        Log.e(TAG, "设置imageView");
-        
        if(result!=null){
         	im.setImageBitmap(result);
+        	 Log.e(TAG, "设置imageView");
         }else
-        	Toast.makeText(context, "网络错误", 1000).show();
+        	Toast.makeText(context, "图片下载失败", 1000).show();
     }
 
 	  @Override
