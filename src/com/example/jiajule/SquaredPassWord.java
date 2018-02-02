@@ -38,6 +38,7 @@ public class SquaredPassWord extends View {
 	private int startY;// 移动起点Y
 	private int moveX;// 正在移动的X
 	private int moveY;// 正在移动的Y
+	private boolean isStart = false;
 
 	public SquaredPassWord(Context context) {
 		super(context);
@@ -104,7 +105,7 @@ public class SquaredPassWord extends View {
 		} else {
 			for (int i = 0; i < 9; i++) {
 				int row = i / 3;// 行数
-				int column = i % 3;// 列数；求整取�?
+				int column = i % 3;// 列数；求整取
 
 				int x = (poitleght + spacing) * column + getPaddingLeft();// x坐标
 				int y = (poitleght + spacing) * row + getPaddingTop();// y坐标
@@ -128,17 +129,20 @@ public class SquaredPassWord extends View {
 					startX = startPoint.getCenterX();
 					startY = startPoint.getCenterY();
 					passWBuffer.append(startPoint.getId());
+					isStart = true;
 				}
 			}
 			invalidate();
 			break;
 		case MotionEvent.ACTION_MOVE:
+			if(!isStart) break;
 			moveX = (int) event.getX();
 			moveY = (int) event.getY();
 			if(points != null){
 			for (Point point : points) {
 				if (point.isInMyArea(moveX, moveY) && !point.isSelected()) {
-					tempPoint.setNextID(point.getId());
+					if (tempPoint != null) 
+						tempPoint.setNextID(point.getId());
 					point.setSelected(true);
 					tempPoint = point;
 					startX = tempPoint.getCenterX();
@@ -149,7 +153,10 @@ public class SquaredPassWord extends View {
 			}
 			invalidate();
 			break;
+		case MotionEvent.ACTION_CANCEL:
 		case MotionEvent.ACTION_UP:
+			isStart = false;
+//			if(!isStart) break;
 			reSetData();
 			startX = startY = moveX = moveY = 0;
 			invalidate();
@@ -207,7 +214,7 @@ public class SquaredPassWord extends View {
 	}
 
 	/**
-	 * 画连�?
+	 * 画连
 	 * 
 	 * @param startX
 	 *            起点X

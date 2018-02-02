@@ -58,7 +58,8 @@ public class MyCustomViewActivity extends Activity {
 					}else{
 					mypass=passWord.getOrbitString();
 					}
-					connect();
+//					connect();
+					Toast.makeText(MyCustomViewActivity.this, "Ω‚À¯–Ú¡–"+mypass, 3000).show();
 					Log.e("wangzhibo", passWord.getOrbitString());
 					/*SharedPreferences settings = getSharedPreferences("data",0);
 					String s=settings.getString("pws_jiugongge","123");

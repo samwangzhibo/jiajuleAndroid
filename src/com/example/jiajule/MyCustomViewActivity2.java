@@ -52,17 +52,14 @@ public class MyCustomViewActivity2 extends Activity {
 					//Log.e("wangzhibo", "Êåâ‰∏ãÂéª‰∫Ü");
 					//break;
 				case MotionEvent.ACTION_UP:
-					if(passWord.getOrbitString() == null){
-						Toast.makeText(MyCustomViewActivity2.this,"…Ë÷√ ß∞‹", 3000).show();
-					}
 					mypass=passWord.getOrbitString();
+					Toast.makeText(MyCustomViewActivity2.this, mypass, 3000).show();
 					//System.out.println(passWord.getOrbitString());
 					/*Log.e("wangzhibo", passWord.getOrbitString());
 					Editor sharedata = getSharedPreferences("data", 0).edit();
 					sharedata.putString("pws_jiugongge",passWord.getOrbitString());
 					sharedata.commit();*/
-					
-					connect();
+//					connect();
 					break;
 
 				default:
